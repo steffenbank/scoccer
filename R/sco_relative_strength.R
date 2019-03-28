@@ -14,8 +14,8 @@ sco_relative_strength <- function(data_input,hometeam_input,awayteam_input,n_pre
   # ---------------------------------------------------------- #
   # filter data
   dplyr::bind_rows(
-    data_input %>% dplyr::group_by(hometeam) %>% dplyr::arrange(desc(dateplayed)) %>% dplyr::slice(1:n_previous_games),
-    data_input %>% dplyr::group_by(awayteam) %>% dplyr::arrange(desc(dateplayed)) %>% dplyr::slice(1:n_previous_games)) %>% dplyr::distinct() ->
+    data_input %>% dplyr::group_by(hometeam) %>% dplyr::arrange(desc(date)) %>% dplyr::slice(1:n_previous_games),
+    data_input %>% dplyr::group_by(awayteam) %>% dplyr::arrange(desc(date)) %>% dplyr::slice(1:n_previous_games)) %>% dplyr::distinct() ->
     filter_data
 
 
@@ -44,28 +44,29 @@ sco_relative_strength <- function(data_input,hometeam_input,awayteam_input,n_pre
   # ---------------------------------------------------------- #
   # relative attack strength @ away
   filter_data %>%
-    filter(awayteam == awayteam_input) %>% group_by(awayteam) %>%
-    summarise(away_goals_scored = sum(ftag), away_games_played = n()) %>%
-    mutate(away_attack_strength = (away_goals_scored/away_games_played)/avg_away_score) ->
+    dplyr::filter(awayteam == awayteam_input) %>% dplyr::group_by(awayteam) %>%
+    dplyr::summarise(away_goals_scored = sum(ftag), away_games_played = n()) %>%
+    dplyr::mutate(away_attack_strength = (away_goals_scored/away_games_played)/avg_away_score) ->
     away_attack_strength
 
   # ---------------------------------------------------------- #
   # relative defence strength @ away
   filter_data %>%
-    filter(awayteam == awayteam_input) %>% group_by(awayteam) %>%
-    summarise(away_goals_conc = sum(fthg), away_games_played = n()) %>%
-    mutate(away_defence_strength = (away_goals_conc/away_games_played)/avg_home_score) ->
+    dplyr::filter(awayteam == awayteam_input) %>% dplyr::group_by(awayteam) %>%
+    dplyr::summarise(away_goals_conc = sum(fthg), away_games_played = n()) %>%
+    dplyr::mutate(away_defence_strength = (away_goals_conc/away_games_played)/avg_home_score) ->
     away_defence_strength
 
   # ---------------------------------------------------------- #
   # relative defence strength @ away
-  bind_cols(
-    inner_join(
-      home_attack_strength %>% select(hometeam,home_attack_strength) %>% mutate(avg_home_score = avg_home_score),
-      home_defence_strength %>% select(hometeam, home_defence_strength) %>% mutate(avg_away_score = avg_away_score), by = NULL),
-    inner_join(
-      away_attack_strength %>% select(awayteam,away_attack_strength),
-      away_defence_strength %>% select(awayteam, away_defence_strength), by = NULL)) ->
+  dplyr::bind_cols(
+    dplyr::inner_join(
+      home_attack_strength %>% dplyr::select(hometeam,home_attack_strength) %>% dplyr::mutate(avg_home_score = avg_home_score),
+      home_defence_strength %>% dplyr::select(hometeam, home_defence_strength) %>% dplyr::mutate(avg_away_score = avg_away_score), by = NULL),
+    dplyr::inner_join(
+      away_attack_strength %>% dplyr::select(awayteam,away_attack_strength),
+      away_defence_strength %>% dplyr::select(awayteam, away_defence_strength), by = NULL)) %>%
+    dplyr::mutate(n_previous_games = n_previous_games)->
     strength_data
 
 
