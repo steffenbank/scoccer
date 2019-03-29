@@ -1,6 +1,6 @@
-# scoccer
+# Scoccer-package
 
-from http://www.football-data.co.uk
+Easen the usage of data from http://www.football-data.co.uk
 
 ## Acquire basic data
 
@@ -13,12 +13,13 @@ Years from 2001 till now are available - season inputs may be specificed as "yyy
 
 Data from Scottish Premiership 2017/2018:
 ``` r
-sco_acquire("1718", "sco_pl") -> dat
-head(dat) # data from Scottish Premiership 2017/2018
+library(scoccer)
+head(sco_acquire("1718", "sco_pl"))
 ```
 
-Relative strength between Ayr and Partick Thistle the last five games. May be used for model purposes
+Relative strength between Ayr and Partick Thistle the last five games. May be used for model purposes:
 ``` r
+library(scoccer)
 sco_relative_strength("1819","sco_pl","Ayr","Partick",5) 
 ```
 
