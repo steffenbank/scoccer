@@ -1,8 +1,31 @@
-# Scoccer-package
+---
+output: github_document
+---
 
-Easen the usage of data from http://www.football-data.co.uk
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## Acquire basic data
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# scoccer
+
+Easen the usage of scottish soccer data from data from http://www.football-data.co.uk
+
+## Installation
+
+You can install scoccer from github with:
+
+```{r gh-installation, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("steffenbank/scoccer")
+```
+
+## Basic usage
 
 The most usefull functions within the packages are \code{sco_acquire} and \code{sco_relative_strength}. Description of fields are availble below @ the column notes. Currently are two leagues available:
 
@@ -23,12 +46,12 @@ library(scoccer)
 sco_relative_strength("1819","sco_pl","Ayr","Partick",5) 
 ```
 
-# Modeling functions
+## Modeling use
 
 ## Column notes
 Key to results data:
 
-Div = League Division
+Div = League Division \n
 Date = Match Date (dd/mm/yy)
 HomeTeam = Home Team
 AwayTeam = Away Team
@@ -60,5 +83,3 @@ HY = Home Team Yellow Cards
 AY = Away Team Yellow Cards
 HR = Home Team Red Cards
 AR = Away Team Red Cards
-HBP = Home Team Bookings Points (10 = yellow, 25 = red)
-ABP = Away Team Bookings Points (10 = yellow, 25 = red)
