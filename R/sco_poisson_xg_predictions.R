@@ -19,7 +19,7 @@ sco_poisson_xg_predictions <- function(relative_strength_input) {
     dplyr::filter(stringr::str_sub(goals,1,4) == stringr::str_sub(position,1,4)) %>%
     dplyr::mutate(goals = stringr::str_sub(goals,10,10)) -> model_data
 
-  return(model_data)
+ 
 
   # ---------------------------------------------------------- #
   # add matchup
