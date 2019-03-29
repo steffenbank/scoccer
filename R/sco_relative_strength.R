@@ -1,7 +1,8 @@
 
 #' relative strength between two opponenets
 #'
-#' @param data_input a object from \code{score_aquire}
+#' @param year_input input as character in years of seasons, eg. "yyyy"
+#' @param league_input sco_pl (Premiership) or sco_ch (Championship)
 #' @param hometeam_input hometeam
 #' @param awayteam_input awayteam
 #' @param n_previous_games  number of games to base the relative strength upon
@@ -9,13 +10,13 @@
 #' @return a dataframe of relative strength in terms of scoring and conceding
 #' @export
 
-sco_relative_strength <- function(data_input,hometeam_input,awayteam_input,n_previous_games) {
+sco_relative_strength <- function(year_input,league_input,hometeam_input,awayteam_input,n_previous_games) {
 
   # ---------------------------------------------------------- #
   # filter data
   dplyr::bind_rows(
-    data_input %>% dplyr::group_by(hometeam) %>% dplyr::arrange(desc(date)) %>% dplyr::slice(1:n_previous_games),
-    data_input %>% dplyr::group_by(awayteam) %>% dplyr::arrange(desc(date)) %>% dplyr::slice(1:n_previous_games)) %>% dplyr::distinct() ->
+    sco_acquire(year_input,league_input) %>% dplyr::group_by(hometeam) %>% dplyr::arrange(desc(date)) %>% dplyr::slice(1:n_previous_games),
+    sco_acquire(year_input,league_input) %>% dplyr::group_by(awayteam) %>% dplyr::arrange(desc(date)) %>% dplyr::slice(1:n_previous_games)) %>% dplyr::distinct() ->
     filter_data
 
 
@@ -66,7 +67,7 @@ sco_relative_strength <- function(data_input,hometeam_input,awayteam_input,n_pre
     dplyr::inner_join(
       away_attack_strength %>% dplyr::select(awayteam,away_attack_strength),
       away_defence_strength %>% dplyr::select(awayteam, away_defence_strength), by = NULL)) %>%
-    dplyr::mutate(n_previous_games = n_previous_games)->
+    dplyr::mutate(n_previous_games = n_previous_games) ->
     strength_data
 
 

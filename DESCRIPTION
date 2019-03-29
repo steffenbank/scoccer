@@ -1,12 +1,11 @@
 Package: scoccer
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Enables the use of scottish soccer data from football-data.co.uk
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Steffen Bank
+Maintainer: Steffen Bank <shok3y@gmail.com>
+Description: The package allows easy integration with historical standard data of the Scottish Premiership and Championship. Additionally modeling functions are implemented.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: dplyr,
@@ -14,5 +13,8 @@ Imports: dplyr,
     stringr,
     magrittr,
     utils,
-    tidyr
+    tidyr,
+    purrr,
+    ggplot2,
+    scales
 RoxygenNote: 6.0.1

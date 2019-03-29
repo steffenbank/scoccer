@@ -24,7 +24,7 @@ sco_poisson_xg <- function(relative_strength_input) {
 
   # ---------------------------------------------------------- #
   # calculate probability for 0-5 goals for home team and select highest
-  dplyr::tibble(homegoals = seq(0,5,1), home_prob = dpois(homegoals,rel_strength$xg_home)) %>%
+  dplyr::tibble(homegoals = seq(0,5,1), home_prob = stats::dpois(homegoals,rel_strength$xg_home)) %>%
     tidyr::spread(homegoals,home_prob,sep = "") %>%
     tidyr::nest(.,.key = "home_prob") ->
     home_goal_data
@@ -33,7 +33,7 @@ sco_poisson_xg <- function(relative_strength_input) {
 
   # ---------------------------------------------------------- #
   # calculate probability for 0-5 goals for away team and select highest
-  dplyr::tibble(awaygoals = seq(0,5,1), away_prob = dpois(awaygoals,rel_strength$xg_away)) %>%
+  dplyr::tibble(awaygoals = seq(0,5,1), away_prob = stats::dpois(awaygoals,rel_strength$xg_away)) %>%
     tidyr::spread(awaygoals,away_prob,sep = "") %>%
     tidyr::nest(.,.key = "away_prob") ->
     away_goal_data

@@ -4,11 +4,13 @@
 \alias{sco_relative_strength}
 \title{relative strength between two opponenets}
 \usage{
-sco_relative_strength(data_input, hometeam_input, awayteam_input,
+sco_relative_strength(year_input, league_input, hometeam_input, awayteam_input,
   n_previous_games)
 }
 \arguments{
-\item{data_input}{a object from \code{score_aquire}}
+\item{year_input}{input as character in years of seasons, eg. "yyyy"}
+
+\item{league_input}{sco_pl (Premiership) or sco_ch (Championship)}
 
 \item{hometeam_input}{hometeam}
 
