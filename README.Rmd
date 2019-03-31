@@ -48,5 +48,14 @@ dplyr::glimpse(sco_relative_strength("1819","sco_ch","Ayr","Partick",5))
 
 The strength is a measure of how well the team does at attacking/defending at home compared to other teams. Values above one corresponds to relatively better and values below relatively low. 
 
+## Standings
+*sco_standings* may be used to compute standing at one of the league at a specific time.
+
+What was the championship standing at 1st of March 2016?
+
+```{r,echo = TRUE}
+sco_standings("1516","sco_ch","2016-03-01")
+```
+
 ## Modeling use
 
