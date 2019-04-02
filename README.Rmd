@@ -57,5 +57,7 @@ What was the championship standing at 1st of March 2016?
 sco_standings("1516","sco_ch","2016-03-01")
 ```
 
-## Modeling use
+## Model 1 functions: Prediciting scores of games
+## Model 2 functions: Prediction the probability of both teams scoring
+source "https://www.thestatsdontlie.com/football/stat-leaders/", origin of prior distribution
 
