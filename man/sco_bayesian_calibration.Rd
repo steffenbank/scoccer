@@ -2,23 +2,18 @@
 % Please edit documentation in R/sco_bayesian_btts_calibration.R
 \name{sco_bayesian_calibration}
 \alias{sco_bayesian_calibration}
-\title{calibrate the bayesian model with respect to where to put best guess thresh}
+\title{calibrate the bayesian model by changing the threshold values}
 \usage{
-sco_bayesian_calibration(league_input, year_input, play_upper_treshhold,
-  play_lower_treshhold)
+sco_bayesian_calibration(league_input, year_input)
 }
 \arguments{
-\item{league_input}{sco_pl (Premiership) or sco_ch (Championship)}
+\item{league_input}{co_pl (Premiership) or sco_ch (Championship)}
 
 \item{year_input}{input as character in years of seasons, eg. "yyyy"}
-
-\item{play_upper_treshhold}{thresh of best guess to accept play of case}
-
-\item{play_lower_treshhold}{thresh of best guess to accept play of non-case}
 }
 \value{
-an object
+a object of prediction strength for combination of upper nad lower treshold values
 }
 \description{
-calibrate the bayesian model with respect to where to put best guess thresh
+calibrate the bayesian model by changing the threshold values
 }
