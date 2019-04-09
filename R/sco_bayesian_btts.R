@@ -1,5 +1,5 @@
 
-#' bayesian model of btts based on logit prior distirubtion
+#' bayesian model of btts based on logit prior distirubtion (case = both teams to score (btts))
 #'
 #' @param year_input input as character in years of seasons, eg. "yyyy"
 #' @param league_input sco_pl (Premiership) or sco_ch (Championship)
@@ -11,11 +11,11 @@
 #' @return a tibble of team and median of samples distributions ("best guess")
 #' @export
 #'
-sco_bayesian_btts <- function(year_input,league_input,var_input,team_input,plot_content, tester) {
+sco_bayesian_btts <- function(year_input,league_input,var_input,team_input) {
 
   # ---------------------------------------------------------- #
   # input from acquire function
-  if(tester == 1) {sco_acquire(year_input, league_input) %>% dplyr::filter(date < Sys.Date()-30) -> input} else {sco_acquire(year_input, league_input) -> input}
+  sco_acquire(year_input, league_input) -> input
 
   # ---------------------------------------------------------- #
   # compute case data (case = btts)
@@ -49,13 +49,12 @@ sco_bayesian_btts <- function(year_input,league_input,var_input,team_input,plot_
 
   # ---------------------------------------------------------- #
   # plot data
-  if(plot_content == 1) {
   plot(parm$proportion_case, parm$probability, type = "h", xlab = "Proportion of cases", ylab = "p", main = paste0(team_input, " (",var_input,") \n cases: ",  n_cases,"/",n_matches), col = "darkgrey", xaxt = 'n')
     axis(side = 1, at = seq(0,1,0.1))
     lines(parm$proportion_case, parm$prior_rescaled, pch = 18, col = "red", type = "l", lty = 2,lwd = 2)
     abline(v = n_cases/n_matches, lwd = 2, col = "darkgreen")
     abline(v = median(parm_samples), lwd = 2, col = "blue")
-    legend("topright", legend = c("est", "est median","prior","data"), col=c("darkgrey","blue", "red","darkgreen"), lty = c(1,1,2,1), cex = 0.8, lwd = c(1,2,2,2))}
+    legend("topright", legend = c("est", "est median","prior","data"), col=c("darkgrey","blue", "red","darkgreen"), lty = c(1,1,2,1), cex = 0.8, lwd = c(1,2,2,2))
 
   # ---------------------------------------------------------- #
   # gather data in tibble as return

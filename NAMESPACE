@@ -2,8 +2,6 @@
 
 export(sco_acquire)
 export(sco_bayesian_btts)
-export(sco_bayesian_calibration)
-export(sco_bayesian_tester)
 export(sco_poisson_xg)
 export(sco_poisson_xg_calibration)
 export(sco_poisson_xg_predictions)
