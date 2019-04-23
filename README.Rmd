@@ -53,7 +53,9 @@ sco_standings("1516","sco_ch","2016-03-01")
 ```
 
 ## Descision support: Prediction the probability of both teams scoring
-A relevant measure is whether a team will score. The package supports a bayesian-model approach. The prior is a logistic function with location of 0.5, corresponding to on average boths teams will score in every second game. This prior is computed using data from "https://www.thestatsdontlie.com/football/stat-leaders/". Data input of the bayesian-model is acquired from the seasons data as year "yyyy".
+A relevant measure is whether a team will score. The package supports a bayesian-model approach. The prior is a logistic function with location of 0.5, corresponding to on average boths teams will score in every second game. This prior is computed using data from https://www.thestatsdontlie.com/football/stat-leaders/. Data input of the bayesian-model is acquired from the seasons data as year "yyyy".
+
+What is the probability that both teams will score if Hamilton Academical F.C. plays at home? As the tibble below shows approximately 50/50. The figure shows the result of the bayesian apporach; grey lines beging probability of proportion of cases (case = both teams score), blue line being estimated median, the green line being the data and the red line beting the prior distribution. The bayesian-modeling returns no firm value but rather a distribution.
 
 ```{r,echo = TRUE}
 sco_bayesian_btts("1819","sco_pl","hometeam","Hamilton")
