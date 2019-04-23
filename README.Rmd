@@ -27,7 +27,7 @@ devtools::install_github("steffenbank/scoccer")
 
 ## Basic usage
 
-The most usefull functions within the packages are *sco_acquire* and *sco_relative_strength*. Description of fields are availble below @ the column notes. Currently are two leagues available:
+The most basic function within the packages are *sco_acquire*. Currently are two leagues available:
 
 1. Scottish Premiership ("sco_pl")
 2. Scottish Champtionship ("sco_ch")
@@ -40,13 +40,7 @@ library(scoccer)
 dplyr::glimpse(sco_acquire("1718", "sco_pl"))
 ```
 
-Relative strength between Ayr and Partick Thistle the last five games. May be used for model purposes:
-```{r,echo = TRUE}
 
-dplyr::glimpse(sco_relative_strength("1819","sco_ch","Ayr","Partick",5))
-```
-
-The strength is a measure of how well the team does at attacking/defending at home compared to other teams. Values above one corresponds to relatively better and values below relatively low. 
 
 ## Standings
 *sco_standings* may be used to compute standing at one of the league at a specific time.
@@ -58,6 +52,14 @@ sco_standings("1516","sco_ch","2016-03-01")
 ```
 
 ## Model 1 functions: Prediciting scores of games
+Relative strength between Ayr and Partick Thistle the last five games. May be used for model purposes:
+```{r,echo = TRUE}
+
+dplyr::glimpse(sco_relative_strength("1819","sco_ch","Ayr","Partick",5))
+```
+
+The strength is a measure of how well the team does at attacking/defending at home compared to other teams. Values above one corresponds to relatively better and values below relatively low. 
+
 ## Model 2 functions: Prediction the probability of both teams scoring
 source "https://www.thestatsdontlie.com/football/stat-leaders/", origin of prior distribution
 

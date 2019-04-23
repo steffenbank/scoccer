@@ -18,7 +18,7 @@ devtools::install_github("steffenbank/scoccer")
 Basic usage
 -----------
 
-The most usefull functions within the packages are *sco\_acquire* and *sco\_relative\_strength*. Description of fields are availble below @ the column notes. Currently are two leagues available:
+The most basic function within the packages are *sco\_acquire*. Currently are two leagues available:
 
 1.  Scottish Premiership ("sco\_pl")
 2.  Scottish Champtionship ("sco\_ch")
@@ -57,28 +57,6 @@ dplyr::glimpse(sco_acquire("1718", "sco_pl"))
 #> $ ar       <int> 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 1, 0, 0,...
 ```
 
-Relative strength between Ayr and Partick Thistle the last five games. May be used for model purposes:
-
-``` r
-
-dplyr::glimpse(sco_relative_strength("1819","sco_ch","Ayr","Partick",5))
-#> Joining, by = "hometeam"
-#> Joining, by = "awayteam"
-#> Observations: 1
-#> Variables: 9
-#> $ hometeam              <fct> Ayr
-#> $ home_attack_strength  <dbl> 0.8876712
-#> $ avg_home_score        <dbl> 1.351852
-#> $ home_defence_strength <dbl> 1.416393
-#> $ avg_away_score        <dbl> 1.12963
-#> $ awayteam              <fct> Partick
-#> $ away_attack_strength  <dbl> 1.062295
-#> $ away_defence_strength <dbl> 0.8876712
-#> $ n_previous_games      <dbl> 5
-```
-
-The strength is a measure of how well the team does at attacking/defending at home compared to other teams. Values above one corresponds to relatively better and values below relatively low.
-
 Standings
 ---------
 
@@ -106,5 +84,32 @@ sco_standings("1516","sco_ch","2016-03-01")
 #> #   additional_data <list>
 ```
 
-Modeling use
-------------
+Model 1 functions: Prediciting scores of games
+----------------------------------------------
+
+Relative strength between Ayr and Partick Thistle the last five games. May be used for model purposes:
+
+``` r
+
+dplyr::glimpse(sco_relative_strength("1819","sco_ch","Ayr","Partick",5))
+#> Joining, by = "hometeam"
+#> Joining, by = "awayteam"
+#> Observations: 1
+#> Variables: 9
+#> $ hometeam              <fct> Ayr
+#> $ home_attack_strength  <dbl> 0.5672727
+#> $ avg_home_score        <dbl> 1.057692
+#> $ home_defence_strength <dbl> 1.057627
+#> $ avg_away_score        <dbl> 1.134615
+#> $ awayteam              <fct> Partick
+#> $ away_attack_strength  <dbl> 1.057627
+#> $ away_defence_strength <dbl> 0.7563636
+#> $ n_previous_games      <dbl> 5
+```
+
+The strength is a measure of how well the team does at attacking/defending at home compared to other teams. Values above one corresponds to relatively better and values below relatively low.
+
+Model 2 functions: Prediction the probability of both teams scoring
+-------------------------------------------------------------------
+
+source "<https://www.thestatsdontlie.com/football/stat-leaders/>", origin of prior distribution
