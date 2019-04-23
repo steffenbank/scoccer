@@ -35,6 +35,7 @@ The most basic function within the packages are *sco_acquire*. Currently are two
 Years from 2001 till now are available - season inputs may be specificed as "yyyy", for instance 2018/2019 season "1819". 
 
 Data from Scottish Premiership 2017/2018:
+
 ```{r,echo = TRUE}
 library(scoccer)
 dplyr::glimpse(sco_acquire("1718", "sco_pl"))
@@ -51,15 +52,20 @@ What was the championship standing at 1st of March 2016?
 sco_standings("1516","sco_ch","2016-03-01")
 ```
 
+## Descision support: Prediction the probability of both teams scoring
+A relevant measure is whether a team will score. The package supports a bayesian-model approach. The prior is a logistic function with location of 0.5, corresponding to on average boths teams will score in every second game. This prior is computed using data from "https://www.thestatsdontlie.com/football/stat-leaders/". Data input of the bayesian-model is acquired from the seasons data as year "yyyy".
+
+```{r,echo = TRUE}
+sco_bayesian_btts("1819","sco_pl","hometeam","Hamilton")
+```
+
 ## Model 1 functions: Prediciting scores of games
 Relative strength between Ayr and Partick Thistle the last five games. May be used for model purposes:
 ```{r,echo = TRUE}
-
 dplyr::glimpse(sco_relative_strength("1819","sco_ch","Ayr","Partick",5))
 ```
 
 The strength is a measure of how well the team does at attacking/defending at home compared to other teams. Values above one corresponds to relatively better and values below relatively low. 
 
-## Model 2 functions: Prediction the probability of both teams scoring
-source "https://www.thestatsdontlie.com/football/stat-leaders/", origin of prior distribution
+
 

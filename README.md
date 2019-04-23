@@ -84,13 +84,28 @@ sco_standings("1516","sco_ch","2016-03-01")
 #> #   additional_data <list>
 ```
 
+Descision support: Prediction the probability of both teams scoring
+-------------------------------------------------------------------
+
+A relevant measure is whether a team will score. The package supports a bayesian-model approach. The prior is a logistic function with location of 0.5, corresponding to on average boths teams will score in every second game. This prior is computed using data from "<https://www.thestatsdontlie.com/football/stat-leaders/>". Data input of the bayesian-model is acquired from the seasons data as year "yyyy".
+
+``` r
+sco_bayesian_btts("1819","sco_pl","hometeam","Hamilton")
+```
+
+![](README-unnamed-chunk-4-1.png)
+
+    #> # A tibble: 1 x 4
+    #>   team     as       median_prop sd_prop
+    #>   <chr>    <chr>          <dbl>   <dbl>
+    #> 1 Hamilton hometeam         0.5   0.100
+
 Model 1 functions: Prediciting scores of games
 ----------------------------------------------
 
 Relative strength between Ayr and Partick Thistle the last five games. May be used for model purposes:
 
 ``` r
-
 dplyr::glimpse(sco_relative_strength("1819","sco_ch","Ayr","Partick",5))
 #> Joining, by = "hometeam"
 #> Joining, by = "awayteam"
@@ -108,8 +123,3 @@ dplyr::glimpse(sco_relative_strength("1819","sco_ch","Ayr","Partick",5))
 ```
 
 The strength is a measure of how well the team does at attacking/defending at home compared to other teams. Values above one corresponds to relatively better and values below relatively low.
-
-Model 2 functions: Prediction the probability of both teams scoring
--------------------------------------------------------------------
-
-source "<https://www.thestatsdontlie.com/football/stat-leaders/>", origin of prior distribution
