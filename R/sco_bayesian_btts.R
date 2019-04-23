@@ -58,8 +58,8 @@ sco_bayesian_btts <- function(year_input,league_input,var_input,team_input) {
 
   # ---------------------------------------------------------- #
   # gather data in tibble as return
-  return(dplyr::tibble(team = team_input,
-         as = var_input,
-         median_prop = median(parm_samples),
-         sd_prop = sd(parm_samples)))
+  #return(dplyr::tibble(team = team_input,
+         #as = var_input,
+         #median_prop = median(parm_samples),
+         #sd_prop = sd(parm_samples)))
 }

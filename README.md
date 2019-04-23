@@ -89,7 +89,7 @@ Descision support: Prediction the probability of both teams scoring
 
 A relevant measure is whether a team will score. The package supports a bayesian-model approach. The prior is a logistic function with location of 0.5, corresponding to on average boths teams will score in every second game. This prior is computed using data from <https://www.thestatsdontlie.com/football/stat-leaders/>. Data input of the bayesian-model is acquired from the seasons data as year "yyyy".
 
-What is the probability that both teams will score if Hamilton Academical F.C. plays at home? As the tibble below shows approximately 50/50. The figure shows the result of the bayesian apporach; grey lines beging probability of proportion of cases (case = both teams score), blue line being estimated median, the green line being the data and the red line beting the prior distribution. The bayesian-modeling returns no firm value but rather a distribution.
+What is the probability that both teams will score if Hamilton Academical F.C. plays at home?. The figure shows the result of the bayesian apporach; grey lines beging probability of proportion of cases (case = both teams score), blue line being estimated median, the green line being the data and the red line beting the prior distribution. The bayesian-modeling returns no firm value but rather a distribution.
 
 ``` r
 sco_bayesian_btts("1819","sco_pl","hometeam","Hamilton")
@@ -100,7 +100,20 @@ sco_bayesian_btts("1819","sco_pl","hometeam","Hamilton")
     #> # A tibble: 1 x 4
     #>   team     as       median_prop sd_prop
     #>   <chr>    <chr>          <dbl>   <dbl>
-    #> 1 Hamilton hometeam         0.5   0.100
+    #> 1 Hamilton hometeam         0.5  0.0998
+
+Alternatively, how often do both teams scores when Celtic is the home team? Rather rare, Celtic has been extremely dominant and combining the prior and the data one get a good estimate of the probability.
+
+``` r
+sco_bayesian_btts("1819","sco_pl","hometeam","Celtic")
+```
+
+![](README-unnamed-chunk-5-1.png)
+
+    #> # A tibble: 1 x 4
+    #>   team   as       median_prop sd_prop
+    #>   <chr>  <chr>          <dbl>   <dbl>
+    #> 1 Celtic hometeam        0.35  0.0983
 
 Model 1 functions: Prediciting scores of games
 ----------------------------------------------
