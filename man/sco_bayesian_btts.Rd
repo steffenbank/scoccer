@@ -2,10 +2,9 @@
 % Please edit documentation in R/sco_bayesian_btts.R
 \name{sco_bayesian_btts}
 \alias{sco_bayesian_btts}
-\title{bayesian model of btts based on logit prior distirubtion}
+\title{bayesian model of btts based on logit prior distirubtion (case = both teams to score (btts))}
 \usage{
-sco_bayesian_btts(year_input, league_input, var_input, team_input, plot_content,
-  tester)
+sco_bayesian_btts(year_input, league_input, var_input, team_input)
 }
 \arguments{
 \item{year_input}{input as character in years of seasons, eg. "yyyy"}
@@ -24,5 +23,5 @@ sco_bayesian_btts(year_input, league_input, var_input, team_input, plot_content,
 a tibble of team and median of samples distributions ("best guess")
 }
 \description{
-bayesian model of btts based on logit prior distirubtion
+bayesian model of btts based on logit prior distirubtion (case = both teams to score (btts))
 }

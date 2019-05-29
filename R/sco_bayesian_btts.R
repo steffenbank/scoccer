@@ -56,10 +56,4 @@ sco_bayesian_btts <- function(year_input,league_input,var_input,team_input) {
     abline(v = median(parm_samples), lwd = 2, col = "blue")
     legend("topright", legend = c("est", "est median","prior","data"), col=c("darkgrey","blue", "red","darkgreen"), lty = c(1,1,2,1), cex = 0.8, lwd = c(1,2,2,2))
 
-  # ---------------------------------------------------------- #
-  # gather data in tibble as return
-  #return(dplyr::tibble(team = team_input,
-         #as = var_input,
-         #median_prop = median(parm_samples),
-         #sd_prop = sd(parm_samples)))
 }
