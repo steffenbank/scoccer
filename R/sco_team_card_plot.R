@@ -33,9 +33,9 @@ sco_team_card_plot <- function(year_input, league_input) {
     # away team per team
   sco_acquire(year_input,league_input) %>%
     dplyr::mutate(cards = hy + ay + hr + ar) %>%
-      dplyr::mutate(card_group = if_else(cards %in% c(0,1,2), "0 - 2",
-                                  if_else(cards %in% c(3,4), "3 - 4",
-                                          if_else(cards %in% c(5,6), "5 - 6","6 - ")))) %>%
+      dplyr::mutate(card_group = dplyr::if_else(cards %in% c(0,1,2), "0 - 2",
+                                  dplyr::if_else(cards %in% c(3,4), "3 - 4",
+                                          dplyr::if_else(cards %in% c(5,6), "5 - 6","6 - ")))) %>%
       dplyr::group_by(team = awayteam,card_group = cards) %>%
       dplyr::tally() %>%
       dplyr::mutate(ven = 'away') -> each_away_team
@@ -46,7 +46,7 @@ sco_team_card_plot <- function(year_input, league_input) {
       dplyr::group_by(team) %>%
       dplyr::summarise(n_total = sum(n)) -> total_away_team
 
-    left_join(each_away_team,total_away_team, by = NULL) %>% mutate(pct = n/n_total) -> away
+    dplyr::left_join(each_away_team,total_away_team, by = NULL) %>% dplyr::mutate(pct = n/n_total) -> away
 
     # ---------------------------------------------------------- #
     # join and plot
