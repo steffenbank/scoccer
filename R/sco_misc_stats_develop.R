@@ -1,15 +1,36 @@
 
-#' Misc stats (shots, cards, corners) development during year
+#' Misc stats (goals,shots, cards, corners) development during year
 #'
-#' @param stat_input_home stat devleopment of hometeam
-#' @param stat_input_away stat development of awayteam
+#' @param stat_input_home stat devleopment (shots, shontsontarget,corners,yellowcard,redcards)
 #' @param year_input input as character in years of seasons, eg. "yyyy"
 #' @param league_input sco_pl (Premiership) or sco_ch (Championship)
 #'
 #' @return a ggplot2 object of development of \code{stat_input_home} and \code{stat_input_away} during \code{year_input}
 #' @export
 #'
-sco_misc_stats_develop <- function(stat_input_home,stat_input_away,year_input, league_input) {
+sco_misc_stats_develop <- function(stat_input,year_input, league_input) {
+
+
+  # ---------------------------------------------------------- #
+  # define inputs
+  if(stat_input == "shots") {
+    stat_input_home <- "hs"
+    stat_input_away <- "as"
+  } else if(stat_input == "shotsontarget") {
+    stat_input_home <- "hst"
+    stat_input_away <- "ast"
+  } else if(stat_input == "corners") {
+    stat_input_home <- "hc"
+    stat_input_away <- "ac"
+  } else if(stat_input == "yellowcards") {
+    stat_input_home <- "hy"
+    stat_input_away <- "ay"
+  }  else if(stat_input == "redcards") {
+    stat_input_home <- "hr"
+    stat_input_away <- "ar"
+  } else {
+    print("Unviable input")
+  }
 
   # ---------------------------------------------------------- #
   # home team stats
@@ -47,7 +68,7 @@ sco_misc_stats_develop <- function(stat_input_home,stat_input_away,year_input, l
     ggplot2::theme(axis.title.x = ggplot2::element_blank(),
           axis.text.x = ggplot2::element_blank(),
           axis.ticks.x = ggplot2::element_blank()) +
-    ggplot2::labs(x = "", y = "", title = paste0(stat_input_home," + ", stat_input_away," per game @", league_input),
+    ggplot2::labs(x = "", y = "", title = paste0(stat_input," per game @ ", league_input),
                   subtitle = paste0(stringr::str_sub(year_input,1,2),"/",stringr::str_sub(year_input,3,4)))
 
 }

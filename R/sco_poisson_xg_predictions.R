@@ -19,12 +19,12 @@ sco_poisson_xg_predictions <- function(relative_strength_input) {
     dplyr::filter(stringr::str_sub(goals,1,4) == stringr::str_sub(position,1,4)) %>%
     dplyr::mutate(goals = stringr::str_sub(goals,10,10)) -> model_data
 
- 
+
 
   # ---------------------------------------------------------- #
   # add matchup
-  matchup <- paste0(dplyr::filter(model_data,position == 'hometeam') %>% dplyr::filter(row_number() == 1) %>% dplyr::pull(team),"-",
-                    dplyr::filter(model_data,position == 'awayteam') %>% dplyr::filter(row_number() == 1) %>% dplyr::pull(team))
+  matchup <- paste0(dplyr::filter(model_data,position == 'hometeam') %>% dplyr::filter(dplyr::row_number() == 1) %>% dplyr::pull(team),"-",
+                    dplyr::filter(model_data,position == 'awayteam') %>% dplyr::filter(dplyr::row_number() == 1) %>% dplyr::pull(team))
   model_data <- model_data %>% dplyr::mutate(matchup = matchup)
 
 

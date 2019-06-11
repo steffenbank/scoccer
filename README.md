@@ -15,8 +15,8 @@ You can install scoccer from github with:
 devtools::install_github("steffenbank/scoccer")
 ```
 
-Basic usage
------------
+Acquire data
+------------
 
 The most basic function within the packages are *sco\_acquire*. Currently are two leagues available:
 
@@ -84,23 +84,18 @@ sco_standings("1516","sco_ch","2016-03-01")
 #> #   additional_data <list>
 ```
 
-Descision support: Prediction the probability of both teams scoring
--------------------------------------------------------------------
+Prediction the probability of both teams scoring
+------------------------------------------------
 
 A relevant measure is whether a team will score. The package supports a bayesian-model approach. The prior is a logistic function with location of 0.5, corresponding to on average boths teams will score in every second game. This prior is computed using data from <https://www.thestatsdontlie.com/football/stat-leaders/>. Data input of the bayesian-model is acquired from the seasons data as year "yyyy".
 
-What is the probability that both teams will score if Hamilton Academical F.C. plays at home?. The figure shows the result of the bayesian apporach; grey lines beging probability of proportion of cases (case = both teams score), blue line being estimated median, the green line being the data and the red line beting the prior distribution. The bayesian-modeling returns no firm value but rather a distribution.
+What is the probability that both teams will score if Hamilton Academical F.C. plays at home? The figure shows the result of the bayesian apporach; grey lines beging probability of proportion of cases (case = both teams score), blue line being estimated median, the green line being the data and the red line beting the prior distribution. The bayesian-modeling returns no firm value but rather a distribution.
 
 ``` r
 sco_bayesian_btts("1819","sco_pl","hometeam","Hamilton")
 ```
 
 ![](README-unnamed-chunk-4-1.png)
-
-    #> # A tibble: 1 x 4
-    #>   team     as       median_prop sd_prop
-    #>   <chr>    <chr>          <dbl>   <dbl>
-    #> 1 Hamilton hometeam         0.5  0.0998
 
 Alternatively, how often do both teams scores when Celtic is the home team? Rather rare, Celtic has been extremely dominant and combining the prior and the data one get a good estimate of the probability.
 
@@ -110,31 +105,87 @@ sco_bayesian_btts("1819","sco_pl","hometeam","Celtic")
 
 ![](README-unnamed-chunk-5-1.png)
 
-    #> # A tibble: 1 x 4
-    #>   team   as       median_prop sd_prop
-    #>   <chr>  <chr>          <dbl>   <dbl>
-    #> 1 Celtic hometeam        0.35  0.0983
+Card plots
+----------
 
-Model 1 functions: Prediciting scores of games
-----------------------------------------------
-
-Relative strength between Ayr and Partick Thistle the last five games. May be used for model purposes:
+Another relevant measure of games is cards. The package supports two card plots (one for referees and one for teams):
 
 ``` r
-dplyr::glimpse(sco_relative_strength("1819","sco_ch","Ayr","Partick",5))
-#> Joining, by = "hometeam"
-#> Joining, by = "awayteam"
-#> Observations: 1
-#> Variables: 9
-#> $ hometeam              <fct> Ayr
-#> $ home_attack_strength  <dbl> 0.5672727
-#> $ avg_home_score        <dbl> 1.057692
-#> $ home_defence_strength <dbl> 1.057627
-#> $ avg_away_score        <dbl> 1.134615
-#> $ awayteam              <fct> Partick
-#> $ away_attack_strength  <dbl> 1.057627
-#> $ away_defence_strength <dbl> 0.7563636
-#> $ n_previous_games      <dbl> 5
+sco_team_card_plot("1819","sco_pl")
+#> Joining, by = "team"
+#> Joining, by = "team"
 ```
 
-The strength is a measure of how well the team does at attacking/defending at home compared to other teams. Values above one corresponds to relatively better and values below relatively low.
+![](README-unnamed-chunk-6-1.png)
+
+``` r
+sco_ref_card_plot("1819","sco_ch")
+#> Joining, by = "referee"
+```
+
+![](README-unnamed-chunk-6-2.png)
+
+Misc stats development
+----------------------
+
+Data from *sco\_acquire* consists of some additional parameters (goals,shots, cards, corners) during a season. The input of the function is the home and away stat of a team during a season. Note, not all stats are available for all seasons of the Championship. For instance, what is the devlopment of yellow cards during a season?
+
+``` r
+sco_misc_stats_develop("yellowcards","1819","sco_pl")
+#> `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+```
+
+![](README-unnamed-chunk-7-1.png)
+
+Prediciting scores of games
+---------------------------
+
+The main modeling framework of *scoccer* is the expected goals predicter. It uses the basisc *sco\_acquire* functionality to predict the most likely score between two teams. Between two teams a realtive strength of *n* previous games of *sco\_relative\_strength* is calculate:
+
+``` r
+sco_relative_strength("1819","sco_ch","Ayr","Partick",5) 
+#> Joining, by = "hometeam"
+#> Joining, by = "awayteam"
+```
+
+The strength is a measure of how well the team does at attacking/defending compared to other teams. Values above one corresponds to relatively better and values below relatively lower. This data is used as an input to *sco\_poisson\_xg*-function, which calculates the most likely score looking *n* games back between two teams. To find the optimal *n* the *sco\_poisson\_xg\_calibration*-function may be used.
+
+To illustrate the workflow of predictions lets assume we know the optimal games (in order to hit the exact result) is between four or five games back in the premier league:
+
+``` r
+suppressMessages(sco_poisson_xg_calibration("1819","sco_pl",4,5))
+```
+
+![](README-unnamed-chunk-9-1.png)
+
+We get slightly better predictions by choosing *4*. Nowe we can create some arbitrary matchups, loop through the expected goals between those and plot it:
+
+``` r
+a <- c('Dundee','Hamilton','Motherwell','Celtic','Hibernian','Kilmarnock')
+b <- c('St Mirren','St Johnstone','Livingston','Hearts','Aberdeen','Rangers') 
+
+for(i in 1:length(a)) {
+  
+  # for one
+  if(i == 1) {base_plot_data <- suppressMessages(sco_poisson_xg_predictions(sco_relative_strength("1819","sco_pl",a[i],b[i],4)))} else {
+  
+  # for two or more
+  dplyr::bind_rows(
+    suppressMessages(sco_poisson_xg_predictions(sco_relative_strength("1819","sco_pl",a[i],b[i],4))),
+    base_plot_data) -> base_plot_data
+  }
+}
+
+ggplot2::ggplot(base_plot_data,ggplot2::aes(x = goals, y = pct, color = position, group = position)) + 
+  ggplot2::geom_line() + 
+  ggplot2::geom_point() + 
+  ggplot2::theme_minimal() +
+  ggplot2::scale_y_continuous(labels = scales::percent) + 
+  ggplot2::theme(legend.title = ggplot2::element_blank()) +
+  ggplot2::labs(x = "", y = "") +
+  ggplot2::scale_color_brewer(palette = "Set1") +
+  ggplot2::facet_wrap(~matchup) +
+  ggplot2::labs(title = "Predictions")
+```
+
+![](README-unnamed-chunk-10-1.png)

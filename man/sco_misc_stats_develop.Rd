@@ -2,23 +2,20 @@
 % Please edit documentation in R/sco_misc_stats_develop.R
 \name{sco_misc_stats_develop}
 \alias{sco_misc_stats_develop}
-\title{Misc stats (shots, cards, corners) development during year}
+\title{Misc stats (goals,shots, cards, corners) development during year}
 \usage{
-sco_misc_stats_develop(stat_input_home, stat_input_away, year_input,
-  league_input)
+sco_misc_stats_develop(stat_input, year_input, league_input)
 }
 \arguments{
-\item{stat_input_home}{stat devleopment of hometeam}
-
-\item{stat_input_away}{stat development of awayteam}
-
 \item{year_input}{input as character in years of seasons, eg. "yyyy"}
 
 \item{league_input}{sco_pl (Premiership) or sco_ch (Championship)}
+
+\item{stat_input_home}{stat devleopment (shots, shontsontarget,corners,yellowcard,redcards)}
 }
 \value{
 a ggplot2 object of development of \code{stat_input_home} and \code{stat_input_away} during \code{year_input}
 }
 \description{
-Misc stats (shots, cards, corners) development during year
+Misc stats (goals,shots, cards, corners) development during year
 }
