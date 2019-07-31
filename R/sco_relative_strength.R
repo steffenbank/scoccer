@@ -70,5 +70,7 @@ sco_relative_strength <- function(year_input,league_input,hometeam_input,awaytea
     dplyr::mutate(n_previous_games = n_previous_games) ->
     strength_data
 
+  return(strength_data)
+
 
 }
