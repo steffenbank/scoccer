@@ -6,17 +6,21 @@
 #' @param hometeam_input hometeam
 #' @param awayteam_input awayteam
 #' @param n_previous_games  number of games to base the relative strength upon
+#' @param date_lim limit of date to include
 #'
 #' @return a dataframe of relative strength in terms of scoring and conceding
 #' @export
 
-sco_relative_strength <- function(year_input,league_input,hometeam_input,awayteam_input,n_previous_games) {
+sco_relative_strength <- function(year_input,league_input,hometeam_input,awayteam_input,n_previous_games,date_lim) {
 
   # ---------------------------------------------------------- #
   # filter data
   dplyr::bind_rows(
-    sco_acquire(year_input,league_input) %>% dplyr::group_by(hometeam) %>% dplyr::arrange(desc(date)) %>% dplyr::slice(1:n_previous_games),
-    sco_acquire(year_input,league_input) %>% dplyr::group_by(awayteam) %>% dplyr::arrange(desc(date)) %>% dplyr::slice(1:n_previous_games)) %>% dplyr::distinct() ->
+    sco_acquire(year_input,league_input) %>% dplyr::filter(lubridate::ymd(date) < lubridate::ymd(date_lim)) %>%
+      dplyr::group_by(hometeam) %>% dplyr::arrange(desc(date)) %>% dplyr::slice(1:n_previous_games),
+    sco_acquire(year_input,league_input) %>% dplyr::filter(lubridate::ymd(date) < lubridate::ymd(date_lim)) %>%
+      dplyr::group_by(awayteam) %>% dplyr::arrange(desc(date)) %>% dplyr::slice(1:n_previous_games)) %>%
+    dplyr::distinct() ->
     filter_data
 
 

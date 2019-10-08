@@ -14,7 +14,6 @@ sco_poisson_xg_tester <- function(year_input,league_input,n_previous_games) {
   # ---------------------------------------------------------- #
   # comparison data
   sco_acquire(year_input, league_input) %>%
-    dplyr::filter(date >= lubridate::floor_date(Sys.Date(),"month") - months(1)) %>%
     dplyr::mutate(result = paste0(fthg,"-",ftag)) %>%
     dplyr::select(date,hometeam,awayteam,result) ->
     comparison_data
@@ -26,8 +25,9 @@ sco_poisson_xg_tester <- function(year_input,league_input,n_previous_games) {
   c <- rep(as.character(comparison_data$hometeam))
   d <- rep(as.character(comparison_data$awayteam))
   e <- n_previous_games
+  f <- rep(comparison_data$date)
 
-  purrr::pmap_df(list(a,b,c,d,e),sco_relative_strength) -> rel
+  purrr::pmap_df(list(a,b,c,d,e,f),sco_relative_strength) -> rel
 
   # ---------------------------------------------------------- #
   # predict outcome of each match
