@@ -4,8 +4,8 @@
 \alias{sco_relative_strength}
 \title{relative strength between two opponenets}
 \usage{
-sco_relative_strength(year_input, league_input, hometeam_input, awayteam_input,
-  n_previous_games)
+sco_relative_strength(year_input, league_input, hometeam_input,
+  awayteam_input, n_previous_games, date_lim)
 }
 \arguments{
 \item{year_input}{input as character in years of seasons, eg. "yyyy"}
@@ -17,6 +17,8 @@ sco_relative_strength(year_input, league_input, hometeam_input, awayteam_input,
 \item{awayteam_input}{awayteam}
 
 \item{n_previous_games}{number of games to base the relative strength upon}
+
+\item{date_lim}{limit of date to include}
 }
 \value{
 a dataframe of relative strength in terms of scoring and conceding

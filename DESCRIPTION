@@ -17,5 +17,6 @@ Imports: dplyr,
     purrr,
     ggplot2,
     scales,
-    viridis
-RoxygenNote: 6.0.1
+    viridis,
+    readxl
+RoxygenNote: 6.1.1
