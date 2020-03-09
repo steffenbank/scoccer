@@ -4,8 +4,14 @@
 \alias{sco_relative_strength}
 \title{relative strength between two opponenets}
 \usage{
-sco_relative_strength(year_input, league_input, hometeam_input,
-  awayteam_input, n_previous_games, date_lim)
+sco_relative_strength(
+  year_input,
+  league_input,
+  hometeam_input,
+  awayteam_input,
+  n_previous_games,
+  date_lim
+)
 }
 \arguments{
 \item{year_input}{input as character in years of seasons, eg. "yyyy"}

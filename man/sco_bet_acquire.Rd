@@ -4,9 +4,11 @@
 \alias{sco_bet_acquire}
 \title{Acquire betting data from Bet365}
 \usage{
-sco_bet_acquire(league_input)
+sco_bet_acquire(year_input, league_input)
 }
 \arguments{
+\item{year_input}{input as character in years of seasons, eg. "yyyy"}
+
 \item{league_input}{sco_pl (Premiership) or sco_ch (Championship)}
 }
 \value{

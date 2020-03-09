@@ -4,8 +4,12 @@
 \alias{sco_poisson_xg_calibration}
 \title{test actual data against model data for difference previous games}
 \usage{
-sco_poisson_xg_calibration(year_input, league_input, n_previous_game_low,
-  n_previous_game_high)
+sco_poisson_xg_calibration(
+  year_input,
+  league_input,
+  n_previous_game_low,
+  n_previous_game_high
+)
 }
 \arguments{
 \item{year_input}{input as character in years of seasons, eg. "yyyy"}

@@ -8,6 +8,7 @@
 #'
 #' @return a data frame
 #' @export
+#' @importFrom rlang .data
 #'
 sco_acquire <- function(year_input, league_input) {
 
