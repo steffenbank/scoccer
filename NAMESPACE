@@ -3,6 +3,7 @@
 export(sco_acquire)
 export(sco_bayesian_btts)
 export(sco_bet_acquire)
+export(sco_bet_plot)
 export(sco_misc_stats_develop)
 export(sco_poisson_xg)
 export(sco_poisson_xg_calibration)
