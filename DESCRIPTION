@@ -20,5 +20,7 @@ Imports:
     scales,
     viridis,
     readxl,
-    rlang
+    rlang,
+    stats,
+    graphics
 RoxygenNote: 7.0.2

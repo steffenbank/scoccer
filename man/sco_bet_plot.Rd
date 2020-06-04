@@ -7,11 +7,11 @@
 sco_bet_plot(venue, venue_naming, team, odds)
 }
 \arguments{
-\item{venue}{hometeam or awayteam}
+\item{venue}{hometeam or awayteam not in ""}
 
-\item{venue_naming}{hometeam or awayteam as character}
+\item{venue_naming}{hometeam or awayteam as character (in "")}
 
-\item{team}{team to look at}
+\item{team}{team to look at (in "")}
 
 \item{odds}{current odds to compare with}
 }
