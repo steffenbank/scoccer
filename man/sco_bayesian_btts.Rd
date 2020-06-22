@@ -16,8 +16,6 @@ sco_bayesian_btts(year_input, league_input, var_input, team_input)
 \item{team_input}{team}
 
 \item{plot_content}{TRUE/FALSE to plot data}
-
-\item{tester}{TRUE/FALSE whether data is used for testing (exclude last 30 days results)}
 }
 \value{
 a tibble of team and median of samples distributions ("best guess")

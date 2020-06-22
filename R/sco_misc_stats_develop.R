@@ -7,6 +7,8 @@
 #'
 #' @return a ggplot2 object of development of \code{stat_input_home} and \code{stat_input_away} during \code{year_input}
 #' @export
+#' @importFrom rlang .data
+#' @importFrom magrittr %>%
 #'
 sco_misc_stats_develop <- function(stat_input,year_input, league_input) {
 
@@ -38,8 +40,8 @@ sco_misc_stats_develop <- function(stat_input,year_input, league_input) {
     dplyr::select(.data$date,team = .data$hometeam,val = stat_input_home) %>%
     dplyr::mutate(ven = "home") %>%
     dplyr::group_by(.data$team) %>%
-    dplyr::arrange(desc(.data$date)) %>%
-    dplyr::filter(ven == 'home') %>%
+    dplyr::arrange(dplyr::desc(.data$date)) %>%
+    dplyr::filter(.data$ven == 'home') %>%
     dplyr::group_by(.data$team,.data$ven) %>%
     dplyr::arrange(date) %>%
     dplyr::mutate(matchs = 1:dplyr::n()) %>% stats::na.omit() -> home
@@ -51,8 +53,8 @@ sco_misc_stats_develop <- function(stat_input,year_input, league_input) {
     dplyr::select(.data$date,team = .data$awayteam,val = stat_input_away) %>%
     dplyr::mutate(ven = "away") %>%
     dplyr::group_by(.data$team) %>%
-    dplyr::arrange(desc(.data$date)) %>%
-    dplyr::filter(ven == 'away') %>%
+    dplyr::arrange(dplyr::desc(.data$date)) %>%
+    dplyr::filter(.data$ven == 'away') %>%
     dplyr::group_by(.data$team,.data$ven) %>%
     dplyr::arrange(.data$date) %>%
     dplyr::mutate(matchs = 1:dplyr::n()) %>% stats::na.omit() -> away
@@ -60,8 +62,8 @@ sco_misc_stats_develop <- function(stat_input,year_input, league_input) {
   # ---------------------------------------------------------- #
   #away team stats
   dplyr::bind_rows(home,away) %>%
-  dplyr::filter(team != "") %>%
-    ggplot2::ggplot(.,ggplot2::aes(x = .data$matchs, y = .data$val, color = .data$ven)) + ggplot2::geom_point(shape = 21) + ggplot2::facet_wrap(~team) +
+  dplyr::filter(.data$team != "") %>%
+    ggplot2::ggplot(.data,ggplot2::aes(x = .data$matchs, y = .data$val, color = .data$ven)) + ggplot2::geom_point(shape = 21) + ggplot2::facet_wrap(~team) +
     ggplot2::scale_y_continuous(breaks = seq(1,max(home$val,na.rm = TRUE),2)) + ggplot2::geom_smooth(se = FALSE) +
     ggplot2::theme_minimal() +
     ggplot2::theme(legend.title = ggplot2::element_blank()) +

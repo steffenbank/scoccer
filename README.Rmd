@@ -111,11 +111,11 @@ b <- c('St Mirren','St Johnstone','Livingston','Hearts','Aberdeen','Rangers')
 for(i in 1:length(a)) {
   
   # for one
-  if(i == 1) {base_plot_data <- suppressMessages(sco_poisson_xg_predictions(sco_relative_strength("1819","sco_pl",a[i],b[i],4)))} else {
+  if(i == 1) {base_plot_data <- suppressMessages(sco_poisson_xg_predictions(sco_relative_strength("1819","sco_pl",a[i],b[i],4,Sys.Date())))} else {
   
   # for two or more
   dplyr::bind_rows(
-    suppressMessages(sco_poisson_xg_predictions(sco_relative_strength("1819","sco_pl",a[i],b[i],4))),
+    suppressMessages(sco_poisson_xg_predictions(sco_relative_strength("1819","sco_pl",a[i],b[i],4,Sys.Date()))),
     base_plot_data) -> base_plot_data
   }
 }

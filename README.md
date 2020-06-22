@@ -148,17 +148,10 @@ sco_relative_strength("1819","sco_ch","Ayr","Partick",5)
 #> Joining, by = "awayteam"
 ```
 
-The strength is a measure of how well the team does at attacking/defending compared to other teams. Values above one corresponds to relatively better and values below relatively lower. This data is used as an input to *sco\_poisson\_xg*-function, which calculates the most likely score looking *n* games back between two teams. To find the optimal *n* the *sco\_poisson\_xg\_calibration*-function may be used.
+The strength is a measure of how well the team does at attacking/defending compared to other teams. Values above one corresponds to relatively better and values below relatively lower. This data is used as an input to *sco\_poisson\_xg*-function, which calculates the most likely score looking *n* games back between two teams. The optimal *n* is varying over time and hard to define.
 
-To illustrate the workflow of predictions lets assume we know the optimal games (in order to hit the exact result) is between four or five games back in the premier league:
 
-``` r
-suppressMessages(sco_poisson_xg_calibration("1819","sco_pl",4,5))
-```
-
-![](README-unnamed-chunk-9-1.png)
-
-We get slightly better predictions by choosing *4*. Nowe we can create some arbitrary matchups, loop through the expected goals between those and plot it:
+Nowe we can create some arbitrary matchups, loop through the expected goals between those and plot it:
 
 ``` r
 a <- c('Dundee','Hamilton','Motherwell','Celtic','Hibernian','Kilmarnock')

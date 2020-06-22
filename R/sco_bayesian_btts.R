@@ -10,6 +10,7 @@
 #' @return a tibble of team and median of samples distributions ("best guess")
 #' @export
 #' @importFrom rlang .data
+#' @importFrom magrittr %>%
 #'
 sco_bayesian_btts <- function(year_input,league_input,var_input,team_input) {
 
