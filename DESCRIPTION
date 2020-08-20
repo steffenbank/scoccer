@@ -22,5 +22,9 @@ Imports:
     readxl,
     rlang,
     stats,
-    graphics
+    graphics,
+    rvest,
+    xml2,
+    ggforce,
+    ggrepel
 RoxygenNote: 7.0.2
