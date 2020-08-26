@@ -30,6 +30,6 @@ sco_acquire <- function(year_input, league_input) {
   utils::read.csv(url(paste0("http://www.football-data.co.uk/mmz4282/",year_input,"/SC,",league,".csv"))) %>%
     dplyr::select(1:23) %>%
     dplyr::mutate(Date = lubridate::ymd(paste0(stringr::str_sub(.data$Date,7,10),stringr::str_sub(.data$Date,4,5),stringr::str_sub(.data$Date,1,2)))) %>%
-    dplyr::rename_all(. %>% tolower)
+    dplyr::rename_all(tolower)
 
 }

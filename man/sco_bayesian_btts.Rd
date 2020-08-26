@@ -14,8 +14,6 @@ sco_bayesian_btts(year_input, league_input, var_input, team_input)
 \item{var_input}{select whether team is play home ("hometeam") or away ("awayteam")}
 
 \item{team_input}{team}
-
-\item{plot_content}{TRUE/FALSE to plot data}
 }
 \value{
 a tibble of team and median of samples distributions ("best guess")

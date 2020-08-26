@@ -4,10 +4,27 @@
 \alias{sco_poisson_xg}
 \title{possion model of expected goals for home and away team}
 \usage{
-sco_poisson_xg(relative_strength_input)
+sco_poisson_xg(
+  year_input,
+  league_input,
+  hometeam_input,
+  awayteam_input,
+  n_previous_games,
+  date_lim
+)
 }
 \arguments{
-\item{relative_strength_input}{input object from \code{sco_relative_strength}}
+\item{year_input}{input as character in years of seasons, eg. "yyyy"}
+
+\item{league_input}{sco_pl (Premiership) or sco_ch (Championship)}
+
+\item{hometeam_input}{hometeam}
+
+\item{awayteam_input}{awayteam}
+
+\item{n_previous_games}{number of games to base the relative strength upon}
+
+\item{date_lim}{limit of date to include}
 }
 \value{
 a object with prediction

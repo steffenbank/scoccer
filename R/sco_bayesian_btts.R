@@ -5,7 +5,6 @@
 #' @param league_input sco_pl (Premiership) or sco_ch (Championship)
 #' @param team_input team
 #' @param var_input select whether team is play home ("hometeam") or away ("awayteam")
-#' @param plot_content TRUE/FALSE to plot data
 #'
 #' @return a tibble of team and median of samples distributions ("best guess")
 #' @export
@@ -20,10 +19,18 @@ sco_bayesian_btts <- function(year_input,league_input,var_input,team_input) {
 
   # ---------------------------------------------------------- #
   # compute case data (case = btts)
-  input %>%
-    dplyr::filter(.[,grep(var_input,colnames(input))] == team_input) %>%
-    dplyr::mutate(case = dplyr::if_else(.data$fthg > 0 & .data$ftag > 0,1,0)) %>%
-    dplyr::select(.[,grep(var_input,colnames(input))],.data$case) -> model_data
+  if(var_input == 'hometeam') {
+    input %>%
+      dplyr::filter(.data$hometeam == team_input) %>%
+      dplyr::mutate(case = dplyr::if_else(.data$fthg > 0 & .data$ftag > 0,1,0)) %>%
+      dplyr::select(.data$hometeam,.data$case) -> model_data
+
+  } else {
+    input %>%
+      dplyr::filter(.data$awayteam == team_input) %>%
+      dplyr::mutate(case = dplyr::if_else(.data$fthg > 0 & .data$ftag > 0,1,0)) %>%
+      dplyr::select(.data$awayteam,.data$case) -> model_data
+  }
 
 
   # ---------------------------------------------------------- #
