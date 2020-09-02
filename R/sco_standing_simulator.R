@@ -13,49 +13,49 @@ sco_standings <- function(year_input, league_input, at_time_date) {
   # ---------------------------------------------------------- #
   # scores at home
   sco_acquire(year_input,league_input) %>%
-    dplyr::filter(date < at_time_date) %>%
+    dplyr::filter(.data$date < at_time_date) %>%
       dplyr::mutate(dummy = 1) %>%
-      dplyr::group_by(team = hometeam) %>%
-      dplyr::summarise(goals_scored_home = sum(fthg),
-                goals_conced_home = sum(ftag),
+      dplyr::group_by(team = .data$hometeam) %>%
+      dplyr::summarise(goals_scored_home = sum(.data$fthg),
+                goals_conced_home = sum(.data$ftag),
                 games_played_home = dplyr::n(),
-                win_home = sum(dummy[fthg > ftag]),
-                draw_home = sum(dummy[fthg == ftag]),
-                loss_home = sum(dummy[fthg < ftag]),
-                points_home = win_home * 3 + draw_home * 1) %>%
-    dplyr::group_by(team) -> home
+                win_home = sum(.data$dummy[.data$fthg > .data$ftag]),
+                draw_home = sum(.data$dummy[.data$fthg == .data$ftag]),
+                loss_home = sum(.data$dummy[.data$fthg < .data$ftag]),
+                points_home = .data$win_home * 3 + .data$draw_home * 1) %>%
+    dplyr::group_by(.data$team) -> home
 
   # ---------------------------------------------------------- #
   # scores at away
   sco_acquire(year_input,league_input) %>%
-    dplyr::filter(date < at_time_date) %>%
+    dplyr::filter(.data$date < at_time_date) %>%
     dplyr::mutate(dummy = 1) %>%
-    dplyr::group_by(team = awayteam) %>%
-    dplyr::summarise(goals_scored_away = sum(ftag),
-              goals_conced_away = sum(fthg),
+    dplyr::group_by(team = .data$awayteam) %>%
+    dplyr::summarise(goals_scored_away = sum(.data$ftag),
+              goals_conced_away = sum(.data$fthg),
               games_played_away = dplyr::n(),
-              win_away = sum(dummy[fthg < ftag]),
-              draw_away = sum(dummy[fthg == ftag]),
-              loss_away = sum(dummy[fthg > ftag]),
-              points_away = win_away * 3 + draw_away * 1) %>%
-    dplyr::group_by(team) -> away
+              win_away = sum(.data$dummy[.data$fthg < .data$ftag]),
+              draw_away = sum(.data$dummy[.data$fthg == .data$ftag]),
+              loss_away = sum(.data$dummy[.data$fthg > .data$ftag]),
+              points_away = .data$win_away * 3 + .data$draw_away * 1) %>%
+    dplyr::group_by(.data$team) -> away
 
 
   # ---------------------------------------------------------- #
   # merged
   dplyr::left_join(home,away) %>%
-    dplyr::mutate(games_played = games_played_home + games_played_away,
-                                  games_won = win_home + win_away,
-                                  games_draw = draw_home + draw_away,
-                                  games_loss = loss_home + loss_away,
-                                  score = paste0(goals_scored_home+goals_scored_away,":",goals_conced_home+goals_conced_away),
-                                  goal_diff = (goals_scored_home+goals_scored_away) - (goals_conced_home+goals_conced_away),
-                                  points = points_home + points_away) %>%
-    dplyr::group_by(team,games_played,games_won,games_loss,score,goal_diff,points) %>%
+    dplyr::mutate(games_played = .data$games_played_home + .data$games_played_away,
+                                  games_won = .data$win_home + .data$win_away,
+                                  games_draw = .data$draw_home + .data$draw_away,
+                                  games_loss = .data$loss_home + .data$loss_away,
+                                  score = paste0(.data$goals_scored_home+.data$goals_scored_away,":",.data$goals_conced_home+.data$goals_conced_away),
+                                  goal_diff = (.data$goals_scored_home+.data$goals_scored_away) - (.data$goals_conced_home+.data$goals_conced_away),
+                                  points = .data$points_home + .data$points_away) %>%
+    dplyr::group_by(.data$team,.data$games_played,.data$games_won,.data$games_loss,.data$score,.data$goal_diff,.data$points) %>%
     tidyr::nest(.key = "additional_data") %>%
-    dplyr::arrange(desc(points)) %>%
+    dplyr::arrange(plyr::desc(.data$points)) %>%
     dplyr::mutate(at_time = lubridate::ymd(at_time_date), standing = 1:dplyr::n()) %>%
-    dplyr::select(standing,at_time,dplyr::everything()) -> merged
+    dplyr::select(.data$standing,.data$at_time,dplyr::everything()) -> merged
 
   return(merged)
 

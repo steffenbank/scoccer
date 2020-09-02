@@ -40,7 +40,7 @@ sco_misc_stats_develop <- function(stat_input,year_input, league_input) {
     dplyr::select(.data$date,team = .data$hometeam,val = stat_input_home) %>%
     dplyr::mutate(ven = "home") %>%
     dplyr::group_by(.data$team) %>%
-    dplyr::arrange(dplyr::desc(.data$date)) %>%
+    dplyr::arrange(plyr::desc(.data$date)) %>%
     dplyr::filter(.data$ven == 'home') %>%
     dplyr::group_by(.data$team,.data$ven) %>%
     dplyr::arrange(date) %>%
@@ -53,7 +53,7 @@ sco_misc_stats_develop <- function(stat_input,year_input, league_input) {
     dplyr::select(.data$date,team = .data$awayteam,val = stat_input_away) %>%
     dplyr::mutate(ven = "away") %>%
     dplyr::group_by(.data$team) %>%
-    dplyr::arrange(dplyr::desc(.data$date)) %>%
+    dplyr::arrange(plyr::desc(.data$date)) %>%
     dplyr::filter(.data$ven == 'away') %>%
     dplyr::group_by(.data$team,.data$ven) %>%
     dplyr::arrange(.data$date) %>%

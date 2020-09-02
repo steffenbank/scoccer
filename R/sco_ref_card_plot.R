@@ -28,8 +28,7 @@ sco_ref_card_plot <- function(year_input, league_input) {
 
   # ---------------------------------------------------------- #
   # compute total cards for each referee
-  each_ref %>%
-    ggplot2::ggplot(.,ggplot2::aes(x = reorder(paste0(.data$referee," (",games,")"),.data$cards/.data$games), fill = reorder(.data$cards/.data$games,.data$cards/.data$games), y = .data$cards/.data$games)) +
+    ggplot2::ggplot(each_ref,ggplot2::aes(x = stats::reorder(paste0(.data$referee," (",.data$games,")"),.data$cards/.data$games), fill = stats::reorder(.data$cards/.data$games,.data$cards/.data$games), y = .data$cards/.data$games)) +
     ggplot2::geom_bar(stat = "identity") +
     ggplot2::coord_flip() +
     ggplot2::theme_minimal() +

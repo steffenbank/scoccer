@@ -26,5 +26,6 @@ Imports:
     rvest,
     xml2,
     ggforce,
-    ggrepel
+    ggrepel,
+    plyr
 RoxygenNote: 7.0.2
