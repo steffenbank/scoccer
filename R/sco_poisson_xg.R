@@ -49,7 +49,7 @@ sco_relative_strength <- function(year_input,league_input,hometeam_input,awaytea
   # relative attack strength @ away
   filter_data %>%
     dplyr::filter(.data$awayteam == awayteam_input) %>% dplyr::group_by(.data$awayteam) %>%
-    dplyr::summarise(away_goals_scored = sum(.data$ftag), away_games_played = dplyrr::n()) %>%
+    dplyr::summarise(away_goals_scored = sum(.data$ftag), away_games_played = dplyr::n()) %>%
     dplyr::mutate(away_attack_strength = (.data$away_goals_scored/.data$away_games_played)/.data$avg_away_score) ->
     away_attack_strength
 

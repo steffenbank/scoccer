@@ -1,7 +1,7 @@
 
 #' Misc stats (goals,shots, cards, corners) development during year
 #'
-#' @param stat_input_home stat devleopment (shots, shontsontarget,corners,yellowcard,redcards)
+#' @param stat_input stat devleopment (shots, shontsontarget,corners,yellowcard,redcards)
 #' @param year_input input as character in years of seasons, eg. "yyyy"
 #' @param league_input sco_pl (Premiership) or sco_ch (Championship)
 #'

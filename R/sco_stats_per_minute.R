@@ -16,6 +16,8 @@
 #'
 sco_goal_per_minute <- function(year_input, league_input, min_goals, min_matches) {
 
+  extrafont::loadfonts(quiet = TRUE)
+
   # ---------------------------------------------------------- #
   # create titles
   if(year_input == '2021' & league_input == "sco_pl") {
@@ -31,12 +33,19 @@ sco_goal_per_minute <- function(year_input, league_input, min_goals, min_matches
   sco_player_data(year_input,league_input) %>%
     dplyr::filter(as.numeric(.data$Gls) >= min_goals & as.numeric(.data$MP) >= min_matches) %>%
     dplyr::mutate(val = as.numeric(gsub(",","",.data$Min))/as.numeric(.data$Gls), param = "Goals") %>%
-    dplyr::select(.data$Player,.data$Team,.data$val,.data$param) %>%
-    ggplot2::ggplot(.data, ggplot2::aes(y = .data$val, x = stats::reorder(paste0(.data$Player, " (",.data$Team,")"),.data$val), fill = .data$val)) + ggplot2::geom_bar(stat = "identity") + ggplot2::coord_flip() +
+    dplyr::select(.data$Player,.data$Team,.data$val,.data$param) -> p_data
+
+  print(p_data)
+
+
+  # ---------------------------------------------------------- #
+  # plot data
+  ggplot2::ggplot(p_data, ggplot2::aes(y = .data$val, x = stats::reorder(paste0(.data$Player, " (",.data$Team,")"),.data$val), fill = .data$val)) + ggplot2::geom_bar(stat = "identity") + ggplot2::coord_flip() +
     ggplot2::theme_minimal() +
-    ggplot2::  scale_fill_gradient(low = "darkgreen", high = "red", na.value = NA) +
-    ggplot2::theme(text = ggplot2::element_text(family = "Roboto Condensed"),
-                   title = ggplot2::element_text(size = 18),
+    ggplot2::scale_fill_gradient(low = "darkgreen", high = "red", na.value = NA) +
+    ggplot2::theme(
+      text = ggplot2::element_text(family = "Mongolian Baiti"),
+      title = ggplot2::element_text(size = 18),
                    plot.subtitle = ggplot2::element_text(size = 16),
                    plot.caption = ggplot2::element_text(size = 10),
                    axis.title = ggplot2::element_text(size = 14),

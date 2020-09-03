@@ -27,5 +27,6 @@ Imports:
     xml2,
     ggforce,
     ggrepel,
-    plyr
+    plyr,
+    extrafont
 RoxygenNote: 7.0.2

@@ -24,7 +24,7 @@ sco_team_card_plot <- function(year_input, league_input) {
   # home team total and join
   each_home_team %>%
     dplyr::group_by(.data$team) %>%
-    dplyr::summarise(n_total = dplyr::sum(.data$n)) -> total_home_team
+    dplyr::summarise(n_total = sum(.data$n)) -> total_home_team
 
   dplyr::left_join(.data$each_home_team,.data$total_home_team, by = NULL) %>% dplyr::mutate(pct = .data$n/.data$n_total) -> home
 
@@ -44,7 +44,7 @@ sco_team_card_plot <- function(year_input, league_input) {
     # home team total and join
     each_away_team %>%
       dplyr::group_by(.data$team) %>%
-      dplyr::summarise(n_total = dplyr::sum(.data$n)) -> total_away_team
+      dplyr::summarise(n_total = sum(.data$n)) -> total_away_team
 
     dplyr::left_join(.data$each_away_team,.data$total_away_team, by = NULL) %>% dplyr::mutate(pct = .data$n/.data$n_total) -> away
 

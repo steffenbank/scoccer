@@ -7,11 +7,11 @@
 sco_misc_stats_develop(stat_input, year_input, league_input)
 }
 \arguments{
+\item{stat_input}{stat devleopment (shots, shontsontarget,corners,yellowcard,redcards)}
+
 \item{year_input}{input as character in years of seasons, eg. "yyyy"}
 
 \item{league_input}{sco_pl (Premiership) or sco_ch (Championship)}
-
-\item{stat_input_home}{stat devleopment (shots, shontsontarget,corners,yellowcard,redcards)}
 }
 \value{
 a ggplot2 object of development of \code{stat_input_home} and \code{stat_input_away} during \code{year_input}
