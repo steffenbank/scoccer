@@ -16,12 +16,13 @@ sco_player_contribution_matrix <- function(year_input, league_input) {
   # create cotribution matrix
   sco_player_data(year_input, league_input) -> raw
 
-  raw %>%
-    dplyr::left_join(.data, raw %>% dplyr::group_by(.data$Team) %>%
+    dplyr::left_join(raw, raw %>% dplyr::group_by(.data$Team) %>%
                        dplyr::summarise(Gls_total = sum(as.numeric(.data$Gls),na.rm = TRUE), Ast_total = sum(as.numeric(.data$Ast),na.rm = TRUE))) %>%
     dplyr::mutate(goal_contrib = as.numeric(.data$Gls)/.data$Gls_total,
-         assist_contrib = as.numeric(.data$Ast)/.data$Ast_total) -> contribution
+         assist_contrib = as.numeric(.data$Ast)/.data$Ast_total) %>%
+      dplyr::filter(!is.na(goal_contrib) & !is.na(assist_contrib)) -> contribution
 
+    print(contribution)
 
   # ---------------------------------------------------------- #
   # create titles
@@ -38,18 +39,18 @@ sco_player_contribution_matrix <- function(year_input, league_input) {
   # ---------------------------------------------------------- #
   # create plot
   contribution %>%
-    ggplot2::ggplot(ggplot2::aes(.data$assist_contrib, .data$goal_contrib)) +
-    ggplot2::geom_point(data = .data$contribution %>%
-               dplyr::filter(.data$goal_contrib < 0.25 | .data$assist_contrib < 0.15),
+    ggplot2::ggplot(ggplot2::aes(assist_contrib, goal_contrib)) +
+    ggplot2::geom_point(data = contribution %>%
+               dplyr::filter(goal_contrib < 0.25 | assist_contrib < 0.15),
              color = "grey20", size = 4, alpha = 0.2) +
     ggplot2::geom_point(data = contribution %>%
-               dplyr::filter(.data$goal_contrib > 0.25 | .data$assist_contrib > 0.15),
+               dplyr::filter(goal_contrib > 0.25 | assist_contrib > 0.15),
              color = "red", size = 4) +
     ggplot2::geom_hline(yintercept = 0.25, color = "grey20", alpha = 0.4) +
     ggplot2::geom_vline(xintercept = 0.15, color = "grey20", alpha = 0.4) +
   ggrepel::geom_text_repel(data = contribution %>%
-                    dplyr::filter(.data$goal_contrib > 0.25 | .data$assist_contrib > 0.15),
-                                  ggplot2::aes(label = .data$Player, family = "Roboto Condensed", fontface = "bold"),
+                    dplyr::filter(goal_contrib > 0.25 | assist_contrib > 0.15),
+                                  ggplot2::aes(label = Player, family = "Roboto Condensed", fontface = "bold"),
                   seed = 15, size = 5,
                   min.segment.length = 0, segment.color = "red",
                   point.padding = 0.5) +

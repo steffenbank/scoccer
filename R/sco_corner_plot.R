@@ -10,14 +10,14 @@
 #' @importFrom rlang .data
 #' @importFrom magrittr %>%
 #'
-sco_corner_plot <- function(team_input, line_on) {
+sco_corner_plot <- function(team_input, line_input) {
 
 
   # ---------------------------------------------------------- #
   # get raw data
   dplyr::bind_rows(
-    sco_acquire("1920","sco_pl") %>% mutate(season = "1920"),
-    sco_acquire("2021","sco_pl") %>% mutate(season = "2021")) %>%
+    sco_acquire("1920","sco_pl") %>% dplyr::mutate(season = "1920"),
+    sco_acquire("2021","sco_pl") %>% dplyr::mutate(season = "2021")) %>%
     dplyr::filter(hometeam == team_input | awayteam == team_input) -> raw_data
 
 
@@ -41,10 +41,10 @@ sco_corner_plot <- function(team_input, line_on) {
 
   # ---------------------------------------------------------- #
   #  plot data
-  ggplot2::ggplot(plot_data, aes(x = .data$opp, y = .data$c, fill = .data$place)) + geom_bar(stat = "identity", position = ggplot2::position_dodge()) +
+  ggplot2::ggplot(plot_data, ggplot2::aes(x = .data$opp, y = .data$c, fill = .data$place)) + ggplot2::geom_bar(stat = "identity", position = ggplot2::position_dodge()) +
     ggplot2::facet_wrap(~.data$season) +
     ggplot2::coord_flip() +
-    geom_hline(ggplot2::aes(yintercept = line_input)) +
+    ggplot2::geom_hline(ggplot2::aes(yintercept = line_input)) +
     ggplot2::theme_minimal() +
     ggplot2::theme(
       text = ggplot2::element_text(family = "Mongolian Baiti"),
@@ -55,7 +55,7 @@ sco_corner_plot <- function(team_input, line_on) {
       axis.text = ggplot2::element_text(size = 12),
       panel.grid.minor.x = ggplot2::element_blank()) +
     ggplot2::theme(legend.position = "none") +
-    labs(x = "", y = "", title = paste0("Corner stats: ", team_input),
+    ggplot2::labs(x = "", y = "", title = paste0("Corner stats: ", team_input),
          caption = paste0("Overall: ", overall_pct,"%\n Home: ", home_pct,"%\n Away: ", away_pct,"%"))
 
 
