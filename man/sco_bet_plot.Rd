@@ -14,6 +14,8 @@ sco_bet_plot(venue, venue_naming, team, odds)
 \item{team}{team to look at (in "")}
 
 \item{odds}{current odds to compare with}
+
+\item{year_input}{input as character in years of seasons, eg. "yyyy"}
 }
 \value{
 a ggplot2 object

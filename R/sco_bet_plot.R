@@ -1,6 +1,7 @@
 
 #' Analyse input of odds: how is the input odds compared to data from this season?
-#'
+
+#' @param year_input input as character in years of seasons, eg. "yyyy"
 #' @param venue hometeam or awayteam not in ""
 #' @param venue_naming hometeam or awayteam as character (in "")
 #' @param team team to look at (in "")
@@ -15,8 +16,8 @@ sco_bet_plot <- function(venue,venue_naming,team,odds) {
 
     # acquire data and filter
     dplyr::bind_rows(
-      sco_bet_acquire("1920","sco_ch"),
-      sco_bet_acquire("1920","sco_pl")) %>% dplyr::filter({{venue}} == team) -> dat_raw
+      sco_bet_acquire(year_input,"sco_ch"),
+      sco_bet_acquire(year_input,"sco_pl")) %>% dplyr::filter({{venue}} == team) -> dat_raw
 
     # create wide and long fomats
     if(venue_naming == 'hometeam') {dat_raw %>% dplyr::select(date,team = .data$awayteam,open = .data$b365h, close = .data$b365ch) -> dat_wide}
