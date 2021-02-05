@@ -25,12 +25,12 @@ sco_team_cards <- function(year_input, league_input,team_input,card_line_input) 
   # Get data of hometeam
   data %>%
     dplyr::filter(hometeam == team_input) %>%
-    dplyr::mutate(cards = hy+hr) %>%
+    dplyr::mutate(cards = hy+dplyr::if_else(hr > 0,hr*2,hr)) %>%
     dplyr::arrange(dplyr::desc(lubridate::ymd(date))) -> hometeam_home_data
 
   data %>%
     dplyr::filter(awayteam == team_input) %>%
-    dplyr::mutate(cards = ay+ar) %>%
+    dplyr::mutate(cards = ay + dplyr::if_else(ar > 0,ar*2,ar)) %>%
     dplyr::arrange(dplyr::desc(lubridate::ymd(date))) -> hometeam_away_data
 
 

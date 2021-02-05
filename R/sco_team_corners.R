@@ -12,7 +12,7 @@
 #' @return a data frame
 #' @export
 #'
-sco_team_corners <- function(year_input, league_input,team_input,card_line_input) {
+sco_team_corners <- function(year_input, league_input,team_input,corner_line_input) {
 
   # ---------------------------------------------------------- #
   # Get data
@@ -33,14 +33,14 @@ sco_team_corners <- function(year_input, league_input,team_input,card_line_input
   # merge data
   suppressMessages(dplyr::bind_rows(
     dplyr::left_join(
-      hometeam_home_data %>% dplyr::slice(1:5) %>% dplyr::group_by(Parameter = paste0(team_input, " home")) %>% dplyr::summarise(`Previous 5 games` = paste0(sum(dummy[hc > card_line_input]),"/5")),
-      hometeam_home_data %>% dplyr::slice(1:10) %>% dplyr::group_by(Parameter = paste0(team_input, " home")) %>% dplyr::summarise(`Previous 10 games` = paste0(sum(dummy[hc > card_line_input]),"/10"))) %>%
-      dplyr::left_join(., hometeam_home_data %>% dplyr::group_by(Parameter = paste0(team_input, " home")) %>% dplyr::summarise(`All season` =  paste0(sum(dummy[hc > card_line_input]),"/",sum(dummy)))),
+      hometeam_home_data %>% dplyr::slice(1:5) %>% dplyr::group_by(Parameter = paste0(team_input, " home")) %>% dplyr::summarise(`Previous 5 games` = paste0(sum(dummy[hc > corner_line_input]),"/5")),
+      hometeam_home_data %>% dplyr::slice(1:10) %>% dplyr::group_by(Parameter = paste0(team_input, " home")) %>% dplyr::summarise(`Previous 10 games` = paste0(sum(dummy[hc > corner_line_input]),"/10"))) %>%
+      dplyr::left_join(., hometeam_home_data %>% dplyr::group_by(Parameter = paste0(team_input, " home")) %>% dplyr::summarise(`All season` =  paste0(sum(dummy[hc > corner_line_input]),"/",sum(dummy)))),
 
     dplyr::left_join(
-      hometeam_away_data %>% dplyr::slice(1:5) %>% dplyr::group_by(Parameter = paste0(team_input, " away")) %>% dplyr::summarise(`Previous 5 games` = paste0(sum(dummy[ac > card_line_input]),"/5")),
-      hometeam_away_data %>% dplyr::slice(1:10) %>% dplyr::group_by(Parameter = paste0(team_input, " away")) %>% dplyr::summarise(`Previous 10 games` = paste0(sum(dummy[ac > card_line_input]),"/10"))) %>%
-      dplyr::left_join(., hometeam_away_data %>% dplyr::group_by(Parameter = paste0(team_input, " away")) %>% dplyr::summarise(`All season` =  paste0(sum(dummy[ac > card_line_input]),"/",sum(dummy)))))) -> data_merged
+      hometeam_away_data %>% dplyr::slice(1:5) %>% dplyr::group_by(Parameter = paste0(team_input, " away")) %>% dplyr::summarise(`Previous 5 games` = paste0(sum(dummy[ac > corner_line_input]),"/5")),
+      hometeam_away_data %>% dplyr::slice(1:10) %>% dplyr::group_by(Parameter = paste0(team_input, " away")) %>% dplyr::summarise(`Previous 10 games` = paste0(sum(dummy[ac > corner_line_input]),"/10"))) %>%
+      dplyr::left_join(., hometeam_away_data %>% dplyr::group_by(Parameter = paste0(team_input, " away")) %>% dplyr::summarise(`All season` =  paste0(sum(dummy[ac > corner_line_input]),"/",sum(dummy)))))) -> data_merged
 
   # ---------------------------------------------------------- #
   # return
