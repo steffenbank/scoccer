@@ -144,7 +144,3 @@ sco_poisson_xg <- function(year_input,league_input,hometeam_input,awayteam_input
 
 
   }
-
-a <- seq(1,11)
-dt <- seq.Date(lubridate::ymd(Sys.Date())-10,lubridate::ymd(Sys.Date()), by = "1 day")
-dplyr::bind_cols(a = a,b = dt) %>% ggplot2::ggplot(.,ggplot2::aes(x = b,y = a)) + ggplot2::geom_line() + ggplot2::scale_x_date(labels = dt[4:8],breaks = dt[4:8])

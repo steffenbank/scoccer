@@ -4,7 +4,7 @@
 \alias{sco_team_corners}
 \title{acquire team corner statistics}
 \usage{
-sco_team_corners(year_input, league_input, team_input, card_line_input)
+sco_team_corners(year_input, league_input, team_input, corner_line_input)
 }
 \arguments{
 \item{year_input}{input as character in years of seasons, eg. "yyyy"}

@@ -4,18 +4,14 @@
 \alias{sco_bet_plot}
 \title{Analyse input of odds: how is the input odds compared to data from this season?}
 \usage{
-sco_bet_plot(venue, venue_naming, team, odds)
+sco_bet_plot(year_input, league_input, team_input)
 }
 \arguments{
-\item{venue}{hometeam or awayteam not in ""}
-
-\item{venue_naming}{hometeam or awayteam as character (in "")}
-
-\item{team}{team to look at (in "")}
-
-\item{odds}{current odds to compare with}
-
 \item{year_input}{input as character in years of seasons, eg. "yyyy"}
+
+\item{league_input}{sco_pl (Premiership) or sco_ch (Championship)}
+
+\item{team_input}{selected_team}
 }
 \value{
 a ggplot2 object

@@ -7,7 +7,7 @@
 #' @return a data frame
 #' @export
 #'
-sco_bet_acquire <- function(year_input,league_input) {
+sco_acquire_bet <- function(year_input,league_input) {
 
   # ---------------------------------------------------------- #
   # check input to be build in

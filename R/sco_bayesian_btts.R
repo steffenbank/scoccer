@@ -3,8 +3,9 @@
 #'
 #' @param year_input input as character in years of seasons, eg. "yyyy"
 #' @param league_input sco_pl (Premiership) or sco_ch (Championship)
-#' @param team_input team
 #' @param var_input select whether team is play home ("hometeam") or away ("awayteam")
+#' @param team_input team
+
 #'
 #' @return a tibble of team and median of samples distributions ("best guess")
 #' @export
