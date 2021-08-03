@@ -9,7 +9,6 @@ sco_poisson_xg(
   league_input,
   hometeam_input,
   awayteam_input,
-  n_previous_games,
   date_lim
 )
 }
@@ -21,8 +20,6 @@ sco_poisson_xg(
 \item{hometeam_input}{hometeam}
 
 \item{awayteam_input}{awayteam}
-
-\item{n_previous_games}{number of games to base the relative strength upon}
 
 \item{date_lim}{limit of date to include}
 }

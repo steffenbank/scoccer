@@ -19,16 +19,13 @@ sco_acquire <- function(year_input, league_input) {
 
   # ---------------------------------------------------------- #
   # assign league
-  if(league_input == "sco_pl") {
-    0 -> league
-  } else {
-    1 -> league
-      }
+  dplyr::tibble(league = c("sco_pl","sco_ch","sco_l1","sco_l2"), trans = c(0,1,2,3)) %>%
+    dplyr::filter(league == league_input) %>%
+    dplyr::pull(.data$trans) -> league
 
   # ---------------------------------------------------------- #
   # aquire data an d
   utils::read.csv(url(paste0("http://www.football-data.co.uk/mmz4282/",year_input,"/SC,",league,".csv"))) %>%
-    dplyr::select(1:23) %>%
     dplyr::mutate(Date = lubridate::ymd(paste0(stringr::str_sub(.data$Date,7,10),stringr::str_sub(.data$Date,4,5),stringr::str_sub(.data$Date,1,2)))) %>%
     dplyr::rename_all(tolower)
 

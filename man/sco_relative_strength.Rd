@@ -9,20 +9,17 @@ sco_relative_strength(
   league_input,
   hometeam_input,
   awayteam_input,
-  n_previous_games,
   date_lim
 )
 }
 \arguments{
 \item{year_input}{input as character in years of seasons, eg. "yyyy"}
 
-\item{league_input}{sco_pl (Premiership) or sco_ch (Championship)}
+\item{league_input}{input of league}
 
 \item{hometeam_input}{hometeam}
 
 \item{awayteam_input}{awayteam}
-
-\item{n_previous_games}{number of games to base the relative strength upon}
 
 \item{date_lim}{limit of date to include}
 }
