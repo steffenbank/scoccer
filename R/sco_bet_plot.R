@@ -11,27 +11,26 @@
 #' @return a ggplot2 object
 #' @export
 #'
-sco_bet_plot <- function(year_input,league_input, team_input) {
+sco_bet_ou_plot <- function(year_input,league_input, team_input) {
 
 
     sco_acquire(year_input, league_input) %>% dplyr::select(.data$date,.data$hometeam,.data$awayteam,
-                        hometeam_open = .data$b365h,
-                        hometeam_closes = .data$b365ch,
-                        awayteam_open = .data$b365a,
-                        awayteam_closes = .data$b365ca,
+                        under_open = .data$b365.2.5.1,
+                        under_closes = .data$b365c.2.5.1,
                         over_open = .data$b365.2.5,
                         over_closes = .data$b365c.2.5) %>%
       tidyr::pivot_longer(.data, cols = c(-.data$date,-.data$hometeam,-.data$awayteam), names_to = "type") %>%
+    dplyr::glimpse() %>%
         dplyr::filter(.data$hometeam == team_input | .data$awayteam == team_input) %>%
       dplyr::filter(.data$hometeam == team_input & grepl("hometeam",.data$type)
                     | .data$awayteam == team_input & grepl("awayteam",.data$type) |
-                      grepl("over",.data$type)) %>%
-      dplyr::mutate(type2 = dplyr::if_else(grepl("over",.data$type),"over 2.5 goals","1X2")) %>%
+                      grepl("over",.data$type) | grepl("under",.data$type)) %>%
+      dplyr::mutate(type2 = dplyr::if_else(grepl("over",.data$type),"over 2.5 goals","under 2.5 goals")) %>%
       dplyr::mutate(type = dplyr::if_else(grepl("open",.data$type),"open","closes")) %>%
       tidyr::pivot_wider(.data, id_cols = c(.data$date,.data$hometeam,.data$awayteam,.data$type2), names_from = .data$type, values_from = .data$value) -> data_man
 
     # may be used to print later
-    dplyr::left_join(
+    suppressMessages(dplyr::left_join(
       data_man %>%
         dplyr::mutate(dummy = 1) %>%
         dplyr::group_by(odds = .data$type2) %>%
@@ -41,7 +40,7 @@ sco_bet_plot <- function(year_input,league_input, team_input) {
       data_man %>%
         dplyr::filter(.data$open>.data$closes) %>%
         dplyr::group_by(odds = .data$type2) %>%
-        dplyr::summarise(decreasing_odds_change = mean(.data$open)-mean(.data$closes))) -> temp
+        dplyr::summarise(decreasing_odds_change = mean(.data$open)-mean(.data$closes)))) -> temp
 
     # plot data
     ggplot2::ggplot() +

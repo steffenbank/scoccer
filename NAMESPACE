@@ -2,10 +2,11 @@
 
 export(sco_acquire)
 export(sco_bayesian_btts)
-export(sco_bet_plot)
+export(sco_bet_ou_plot)
 export(sco_poisson_xg)
 export(sco_relative_strength)
 export(sco_standings)
+export(sco_team_stats)
 importFrom(magrittr,"%>%")
 importFrom(rlang,.data)
 importFrom(stats,reorder)

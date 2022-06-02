@@ -8,6 +8,8 @@
 #' @param date_lim limit of date to include
 #'
 #' @return a dataframe of relative strength in terms of scoring and conceding
+#' @importFrom rlang .data
+
 #' @export
 #'
 sco_relative_strength <- function(year_input,league_input,hometeam_input,awayteam_input,date_lim) {
