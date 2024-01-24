@@ -13,13 +13,16 @@
 #'
 sco_bet_ou_plot <- function(year_input,league_input, team_input) {
 
+  year_input <- "2324"
+  league_input <- "sco_l1"
+  team_input <- "Queen of Sth"
 
     sco_acquire(year_input, league_input) %>% dplyr::select(.data$date,.data$hometeam,.data$awayteam,
                         under_open = .data$b365.2.5.1,
                         under_closes = .data$b365c.2.5.1,
                         over_open = .data$b365.2.5,
                         over_closes = .data$b365c.2.5) %>%
-      tidyr::pivot_longer(.data, cols = c(-.data$date,-.data$hometeam,-.data$awayteam), names_to = "type") %>%
+      tidyr::pivot_longer(., cols = c(-.data$date,-.data$hometeam,-.data$awayteam), names_to = "type") %>%
     dplyr::glimpse() %>%
         dplyr::filter(.data$hometeam == team_input | .data$awayteam == team_input) %>%
       dplyr::filter(.data$hometeam == team_input & grepl("hometeam",.data$type)
@@ -27,7 +30,7 @@ sco_bet_ou_plot <- function(year_input,league_input, team_input) {
                       grepl("over",.data$type) | grepl("under",.data$type)) %>%
       dplyr::mutate(type2 = dplyr::if_else(grepl("over",.data$type),"over 2.5 goals","under 2.5 goals")) %>%
       dplyr::mutate(type = dplyr::if_else(grepl("open",.data$type),"open","closes")) %>%
-      tidyr::pivot_wider(.data, id_cols = c(.data$date,.data$hometeam,.data$awayteam,.data$type2), names_from = .data$type, values_from = .data$value) -> data_man
+      tidyr::pivot_wider(., id_cols = c(.data$date,.data$hometeam,.data$awayteam,.data$type2), names_from = .data$type, values_from = .data$value) -> data_man
 
     # may be used to print later
     suppressMessages(dplyr::left_join(
@@ -73,4 +76,5 @@ sco_bet_ou_plot <- function(year_input,league_input, team_input) {
 
 
 }
+
 

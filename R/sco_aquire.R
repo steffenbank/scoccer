@@ -15,7 +15,7 @@ sco_acquire <- function(year_input, league_input) {
 
   # ---------------------------------------------------------- #
   # check input to be build in
-
+  Sys.setenv(R_LIBCURL_SSL_REVOKE_BEST_EFFORT=TRUE)
 
   # ---------------------------------------------------------- #
   # assign league
